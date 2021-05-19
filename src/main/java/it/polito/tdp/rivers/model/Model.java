@@ -21,8 +21,6 @@ public class Model
 	public Model()
 	{
 		this.riversDao = new RiversDAO();
-		this.allRivers = null;
-		this.river = null;
 		this.simulator = Simulator.buildSimulator();
 	}
 	
@@ -42,7 +40,7 @@ public class Model
 			&& selectedRiver.getNumMeasurements() != null && selectedRiver.getAvgFlowPerSec() != null)
 			return;	//already computed
 		
-		this.riversDao.getDataOf(this.river);
+		this.riversDao.setDataOf(this.river);
 		
 		return;
 	}
@@ -82,7 +80,9 @@ public class Model
 		if(!selectedRiver.equals(this.river))
 			throw new RuntimeException("Error: new river is different from the previous selected");
 		
-		SimulatorResult result = this.simulator.initialize(selectedRiver, scaleFactor).run();
+		this.riversDao.setFlowsOf(this.river);
+		
+		SimulatorResult result = this.simulator.initialize(this.river, scaleFactor).run();
 		return result;
 	}
 	

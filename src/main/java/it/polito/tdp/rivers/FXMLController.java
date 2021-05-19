@@ -41,7 +41,7 @@ public class FXMLController
 
     @FXML
     private TextField scaleFactorTextField;
-    private static final int MAX_CHARS_SCALE_FACTOR = 3;
+    private static final int MAX_CHARS_SCALE_FACTOR = 6;
 
     @FXML
     private Button startSimulationButton;
@@ -143,21 +143,20 @@ public class FXMLController
 		}
     	
     	// run simulation
-    	//TODO: finish to implement method
     	SimulatorResult result = this.model.startSimulation(selectedRiver, scaleFactor);
     	
-    	// get output
-    	double Q = result.getWaterBasinCapacity();
-    	int daysOfDisruption = result.getNumDaysOfDisruption();
-    	double avgBasinLevel = result.getAvgBasinLevel();
-    	
     	//print output
-    	String output = this.printOutput(selectedRiver, scaleFactor, Q, daysOfDisruption, avgBasinLevel);
+    	String output = this.printOutput(selectedRiver, scaleFactor, result);
     	this.outputTextArea.setText(output);
     }
 
-    private String printOutput(River river, double scaleFactor, double q, int daysOfDisruption, double avgBasinLevel)
+    private String printOutput(River river, double scaleFactor, SimulatorResult result)
 	{
+    	// get output
+    	double Q = result.getWaterBasinCapacity();
+    	int daysOfDisruption = result.getNumDaysOfDisruption();
+    	double avgBasinLevelPerSec = result.getAvgBasinLevelPerSec();
+    	
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("*** Simulazione effetuata ***\n\n");
@@ -166,8 +165,9 @@ public class FXMLController
 		sb.append("\tFattore di scala (k): ").append(scaleFactor).append("\n");
 		sb.append("\n");
 		sb.append("Output:\n");
+		sb.append("\tCapacità del bacino: ").append(String.format("%.3e", Q)).append(" m^3\n");
 		sb.append("\tNumero di giorni di disservizio: ").append(daysOfDisruption).append("\n");
-		sb.append("\tOccupazione media del bacino: ").append(String.format("%.3f", avgBasinLevel)).append(" m^3/giorno");
+		sb.append("\tOccupazione media del bacino: ").append(String.format("%.3f", avgBasinLevelPerSec)).append(" m^3/s");
 		
 		return sb.toString();
 	}
@@ -199,9 +199,6 @@ public class FXMLController
         	
         	if(!input.matches("[0-9.]+"))
         		input = input.replaceAll("[^0-9.]+", "");
-        	
-        	if(insertedChars == 0 && input.matches("(0)+(.)*"))
-        		input = input.replaceFirst("(0)+", "");
         	
         	change.setText(input);
         	

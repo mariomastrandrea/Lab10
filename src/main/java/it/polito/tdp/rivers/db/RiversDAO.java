@@ -45,7 +45,7 @@ public class RiversDAO
 		return rivers;
 	}
 
-	public void getDataOf(River river)
+	public void setDataOf(River river)
 	{
 		final String sqlQuery = String.format("%s %s %s",
 			"SELECT MIN(day) as firstDate, MAX(day) as lastDate, COUNT(*) AS num, AVG(flow) AS avgFlow",
@@ -81,7 +81,7 @@ public class RiversDAO
 		}
 	}
 	
-	public void getFlowsOf(River river)
+	public void setFlowsOf(River river)
 	{
 		final String sqlQuery = String.format("%s %s %s %s",
 												"SELECT id, day, flow",
@@ -89,34 +89,34 @@ public class RiversDAO
 												"WHERE river = ?",
 												"ORDER BY day ASC");
 			
-			List<Flow> flows = new ArrayList<>();
-		
-			try
+		List<Flow> flows = new ArrayList<>();
+
+		try
+		{
+			Connection connection = DBConnect.getConnection();
+			PreparedStatement statement = connection.prepareStatement(sqlQuery);
+			statement.setInt(1, river.getId());
+			ResultSet queryResult = statement.executeQuery();
+
+			while(queryResult.next())
 			{
-				Connection connection = DBConnect.getConnection();
-				PreparedStatement statement = connection.prepareStatement(sqlQuery);
-				statement.setInt(1, river.getId());
-				ResultSet queryResult = statement.executeQuery();
-				
-				while(queryResult.next())
-				{
-					int flowId = queryResult.getInt("id");
-					LocalDate date = queryResult.getDate("day").toLocalDate();
-					double flowPerSec = queryResult.getDouble("flow");
-					
-					Flow newFlow = new Flow(flowId, date, flowPerSec, river);
-					flows.add(newFlow);
-				}
-				
-				river.setFlows(flows);
-				
-				DBConnect.close(queryResult, statement, connection);
+				int flowId = queryResult.getInt("id");
+				LocalDate date = queryResult.getDate("day").toLocalDate();
+				double flowPerSec = queryResult.getDouble("flow");
+
+				Flow newFlow = new Flow(flowId, date, flowPerSec, river);
+				flows.add(newFlow);
 			}
-			catch(SQLException sqle)
-			{
-				sqle.printStackTrace();
-				throw new RuntimeException("Dao error in getFlowsOf()", sqle);
-			}
+
+			river.setFlows(flows);
+
+			DBConnect.close(queryResult, statement, connection);
+		}
+		catch(SQLException sqle)
+		{
+			sqle.printStackTrace();
+			throw new RuntimeException("Dao error in getFlowsOf()", sqle);
+		}
 	}
 }
 
