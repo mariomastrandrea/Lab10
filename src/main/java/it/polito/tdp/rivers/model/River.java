@@ -3,62 +3,66 @@ package it.polito.tdp.rivers.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class River {
-	private int id;
+public class River 
+{
+	private final int id;
 	private String name;
 	private double flowAvg;
 	private List<Flow> flows;
 	
-	public River(int id) {
+	public River(int id) 
+	{
 		this.id = id;
 	}
 
-	public River(int id, String name) {
+	public River(int id, String name) 
+	{
 		this.id = id;
 		this.name = name;
 	}
 
-	public String getName() {
-		return name;
+	public String getName() 
+	{
+		return this.name;
 	}
 
-	public int getId() {
-		return id;
+	public int getId() 
+	{
+		return this.id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public double getFlowAvg() 
+	{
+		return this.flowAvg;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public double getFlowAvg() {
-		return flowAvg;
-	}
-
-	public void setFlowAvg(double flowAvg) {
+	public void setFlowAvg(double flowAvg) 
+	{
 		this.flowAvg = flowAvg;
 	}
 
-	public void setFlows(List<Flow> flows) {
+	public void setFlows(List<Flow> flows) 
+	{
 		this.flows = flows;
 	}
 
-	public List<Flow> getFlows() {
-		if (flows == null)
-			flows = new ArrayList<Flow>();
+	public List<Flow> getFlows() 
+	{
+		if (this.flows == null)
+			this.flows = new ArrayList<Flow>();
+		
 		return flows;
 	}
 
 	@Override
-	public String toString() {
-		return name;
+	public String toString() 
+	{
+		return this.name;
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode() 
+	{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
@@ -66,7 +70,8 @@ public class River {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj) 
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)

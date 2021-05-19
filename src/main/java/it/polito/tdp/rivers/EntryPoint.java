@@ -8,11 +8,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-public class EntryPoint extends Application {
-
+public class EntryPoint extends Application 
+{
     @Override
-    public void start(Stage stage) throws Exception {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene.fxml"));
+    public void start(Stage stage) throws Exception 
+    {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene_lab10.fxml"));
     	Parent root = loader.load();
         Scene scene = new Scene(root);
          
@@ -20,7 +21,8 @@ public class EntryPoint extends Application {
         FXMLController controller = loader.getController();
         controller.setModel(model);
         
-        stage.setTitle("Lab10");
+        stage.setTitle("Lab10 - Rivers");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -33,7 +35,8 @@ public class EntryPoint extends Application {
      *
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         launch(args);
     }
 

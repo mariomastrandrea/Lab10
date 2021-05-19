@@ -10,28 +10,32 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class RiversDAO {
-
-	public List<River> getAllRivers() {
-		
-		final String sql = "SELECT id, name FROM river";
+public class RiversDAO 
+{
+	public List<River> getAllRivers() 
+	{	
+		final String sqlQuery = "SELECT id, name FROM river";
 
 		List<River> rivers = new LinkedList<River>();
 
-		try {
-			Connection conn = DBConnect.getConnection();
-			PreparedStatement st = conn.prepareStatement(sql);
-			ResultSet res = st.executeQuery();
+		try 
+		{
+			Connection connection = DBConnect.getConnection();
+			PreparedStatement statement = connection.prepareStatement(sqlQuery);
+			ResultSet queryResult = statement.executeQuery();
 
-			while (res.next()) {
-				rivers.add(new River(res.getInt("id"), res.getString("name")));
+			while (queryResult.next()) 
+			{
+				River newRiver = new River(queryResult.getInt("id"), queryResult.getString("name"));
+				rivers.add(newRiver);
 			}
 
-			conn.close();
-			
-		} catch (SQLException e) {
-			//e.printStackTrace();
-			throw new RuntimeException("SQL Error");
+			connection.close();
+		} 
+		catch (SQLException sqle) 
+		{
+			sqle.printStackTrace();
+			throw new RuntimeException("Dao Error in getAllRivers()", sqle);
 		}
 
 		return rivers;
