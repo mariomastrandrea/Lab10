@@ -14,6 +14,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.input.KeyEvent;
 import it.polito.tdp.rivers.model.Model;
 import it.polito.tdp.rivers.model.River;
+import it.polito.tdp.rivers.simulator.SimulatorResult;
 
 public class FXMLController 
 {
@@ -141,12 +142,14 @@ public class FXMLController
 			return;
 		}
     	
+    	// run simulation
     	//TODO: finish to implement method
-    	this.model.startSimulation(selectedRiver, scaleFactor);
+    	SimulatorResult result = this.model.startSimulation(selectedRiver, scaleFactor);
     	
-    	double Q = this.model.getWaterBasinCapacity();
-    	int daysOfDisruption = this.model.getNumDaysOfDisruption();
-    	double avgBasinLevel = this.model.getAvgBasinLevel();
+    	// get output
+    	double Q = result.getWaterBasinCapacity();
+    	int daysOfDisruption = result.getNumDaysOfDisruption();
+    	double avgBasinLevel = result.getAvgBasinLevel();
     	
     	//print output
     	String output = this.printOutput(selectedRiver, scaleFactor, Q, daysOfDisruption, avgBasinLevel);

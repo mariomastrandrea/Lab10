@@ -1,12 +1,13 @@
-package it.polito.tdp.rivers.model;
+package it.polito.tdp.rivers.simulator;
 
-public class Simulator
+import it.polito.tdp.rivers.model.River;
+
+public class Simulator implements InitializableSimulator, RunnableSimulator, SimulatorResult
 {
 	public static final int SECS_IN_A_MINUTE = 60;
 	public static final int MINUTES_IN_A_HOUR = 60;
 	public static final int HOURS_IN_A_DAY = 24;
 	public static final int DAYS_IN_A_MONTH = 60;
-
 
 	// input
 	private River river;
@@ -19,12 +20,14 @@ public class Simulator
 	private double avgBasinLevel;	// C_med
 	
 	
-	public Simulator()
+	private Simulator() { }
+	
+	public static InitializableSimulator buildSimulator() 
 	{
-		
+		return new Simulator();
 	}
 	
-	public void initialize(River river, double scaleFactor)
+	public RunnableSimulator initialize(River river, double scaleFactor)
 	{
 		this.river = river;
 		this.scaleFactor = scaleFactor;
@@ -32,11 +35,15 @@ public class Simulator
 		int secondsInAMonth = SECS_IN_A_MINUTE * MINUTES_IN_A_HOUR * HOURS_IN_A_DAY * DAYS_IN_A_MONTH;
 		this.waterBasinCapacity = this.scaleFactor * this.river.getAvgFlowPerSec() * secondsInAMonth;
 		//TODO: implement method; generate events
+		
+		return this;
 	}
 	
-	public void run()
+	public Simulator run()
 	{
 		//TODO: implement method
+		
+		return this;
 	}
 	
 	public double getWaterBasinCapacity()

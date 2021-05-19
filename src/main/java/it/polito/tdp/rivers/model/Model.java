@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.Set;
 
 import it.polito.tdp.rivers.db.RiversDAO;
+import it.polito.tdp.rivers.simulator.InitializableSimulator;
+import it.polito.tdp.rivers.simulator.Simulator;
+import it.polito.tdp.rivers.simulator.SimulatorResult;
 
 public class Model 
 {
@@ -12,7 +15,7 @@ public class Model
 	private Set<River> allRivers;
 	private River river;
 	
-	private Simulator simulator;
+	private InitializableSimulator simulator;
 	
 	
 	public Model()
@@ -20,7 +23,7 @@ public class Model
 		this.riversDao = new RiversDAO();
 		this.allRivers = null;
 		this.river = null;
-		this.simulator = new Simulator();
+		this.simulator = Simulator.buildSimulator();
 	}
 	
 	public Collection<River> getAllRivers()
@@ -74,28 +77,13 @@ public class Model
 		return avgFlow;
 	}
 
-	public void startSimulation(River selectedRiver, double scaleFactor)
+	public SimulatorResult startSimulation(River selectedRiver, double scaleFactor)
 	{
 		if(!selectedRiver.equals(this.river))
 			throw new RuntimeException("Error: new river is different from the previous selected");
 		
-		this.simulator.initialize(this.river, scaleFactor);
-		this.simulator.run();
+		SimulatorResult result = this.simulator.initialize(selectedRiver, scaleFactor).run();
+		return result;
 	}
-
-	public double getWaterBasinCapacity()
-	{
-		return this.simulator.getWaterBasinCapacity();
-	}
-
-	public int getNumDaysOfDisruption()
-	{
-		return this.getNumDaysOfDisruption();
-	}
-
-	public double getAvgBasinLevel()
-	{
-		return this.simulator.getAvgBasinLevel();
-	}
-
+	
 }
