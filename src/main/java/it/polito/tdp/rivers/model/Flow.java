@@ -4,15 +4,23 @@ import java.time.LocalDate;
 
 public class Flow 
 {
-	private LocalDate day;
-	private double flow;
-	private River river;
+	private final int id;
+	private final LocalDate day;
+	private final double flow;
+	private final River river;
 
-	public Flow(LocalDate day, double flow, River river) 
+	
+	public Flow(int id, LocalDate day, double flow, River river) 
 	{
+		this.id = id;
 		this.day = day;
 		this.flow = flow;
 		this.river = river;
+	}
+	
+	public int getId()
+	{
+		return this.id;
 	}
 
 	public LocalDate getDay() 
@@ -33,7 +41,7 @@ public class Flow
 	@Override
 	public String toString() 
 	{
-		return "Flow [day=" + day + ", flow=" + flow + ", river=" + river + "]";
+		return "Flow Id: " + this.id + ", date: " + 
+					this.day + ", flow: " + this.flow + ", river: " + this.river;
 	}
-
 }

@@ -1,5 +1,6 @@
 package it.polito.tdp.rivers.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +8,12 @@ public class River
 {
 	private final int id;
 	private String name;
-	private double flowAvg;
+	private LocalDate firstDate;
+	private LocalDate lastDate;
+	private Integer numMeasurements;
+	private Double avgFlowPerSec;
 	private List<Flow> flows;
+	
 	
 	public River(int id) 
 	{
@@ -21,24 +26,54 @@ public class River
 		this.name = name;
 	}
 
-	public String getName() 
-	{
-		return this.name;
-	}
-
 	public int getId() 
 	{
 		return this.id;
 	}
-
-	public double getFlowAvg() 
+	
+	public String getName() 
 	{
-		return this.flowAvg;
+		return this.name;
+	}
+	
+	public LocalDate getFirstDate()
+	{
+		return this.firstDate;
+	}
+	
+	public void setFirstDate(LocalDate firstDate)
+	{
+		this.firstDate = firstDate;
+	}
+	
+	public LocalDate getLastDate()
+	{
+		return this.lastDate;
+	}
+	
+	public void setLastDate(LocalDate lastDate)
+	{
+		this.lastDate = lastDate;
 	}
 
-	public void setFlowAvg(double flowAvg) 
+	public Integer getNumMeasurements()
 	{
-		this.flowAvg = flowAvg;
+		return this.numMeasurements;
+	}
+	
+	public void setNumMeasurements(Integer numMeasurements)
+	{
+		this.numMeasurements = numMeasurements;
+	}
+
+	public Double getAvgFlowPerSec() 
+	{
+		return this.avgFlowPerSec;
+	}
+
+	public void setAvgFlowPerSec(Double avgFlowPerSec) 
+	{
+		this.avgFlowPerSec = avgFlowPerSec;
 	}
 
 	public void setFlows(List<Flow> flows) 
@@ -51,7 +86,7 @@ public class River
 		if (this.flows == null)
 			this.flows = new ArrayList<Flow>();
 		
-		return flows;
+		return this.flows;
 	}
 
 	@Override
@@ -65,7 +100,7 @@ public class River
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + this.id;
 		return result;
 	}
 
@@ -79,7 +114,7 @@ public class River
 		if (getClass() != obj.getClass())
 			return false;
 		River other = (River) obj;
-		if (id != other.id)
+		if (this.id != other.id)
 			return false;
 		return true;
 	}

@@ -31,7 +31,7 @@
 				<HBox alignment="CENTER_LEFT" spacing="10.0">
 					<children>
 						<Label text="Fiume" />
-						<ComboBox fx:id="boxRiver" promptText="Scegli un fiume..." />
+						<ComboBox fx:id="riverComboBox" onAction="#handleRiverSelection" promptText="Scegli un fiume..." />
 					</children>
 				</HBox>
 				<GridPane hgap="5.0" vgap="5.0">
@@ -48,22 +48,22 @@
 					<children>
 						<Label text="Prima data" />
 						<Label text="Ultima data" GridPane.columnIndex="1" />
-						<Label text="N. misure" GridPane.columnIndex="2" />
-						<TextField fx:id="txtStartDate" editable="false" GridPane.rowIndex="1" />
-						<TextField fx:id="txtEndDate" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-						<TextField fx:id="txtNumMeasurements" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-						<Label text="f_med" GridPane.columnIndex="3" />
-						<TextField fx:id="txtFMed" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+						<Label text="Num. misurazioni" GridPane.columnIndex="2" />
+						<TextField fx:id="firstDateTextField" disable="true" editable="false" focusTraversable="false" GridPane.rowIndex="1" />
+						<TextField fx:id="lastDateTextField" disable="true" editable="false" focusTraversable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+						<TextField fx:id="numMeasurementsTextField" disable="true" editable="false" focusTraversable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+						<Label text="Flusso medio" GridPane.columnIndex="3" />
+						<TextField fx:id="averageFlowTextField" disable="true" editable="false" focusTraversable="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 					</children>
 				</GridPane>
 				<HBox alignment="CENTER_LEFT" spacing="10.0">
 					<children>
-						<Label text="Fattore di scala (k)" />
-						<TextField fx:id="txtK" />
-						<Button fx:id="btnSimula" mnemonicParsing="false" prefWidth="65.0" text="Simula" />
+						<Label text="Fattore di scala (k &gt; 0)" />
+						<TextField fx:id="scaleFactorTextField" disable="true" onKeyTyped="#handleScaleFactorTyping" promptText="Inserisci k..." />
+						<Button fx:id="startSimulationButton" disable="true" mnemonicParsing="false" onAction="#handleStartSimulation" text="Avvia la simulazione" />
 					</children>
 				</HBox>
-				<TextArea fx:id="txtResult" editable="false" prefHeight="300.0" />
+				<TextArea fx:id="outputTextArea" editable="false" focusTraversable="false" prefHeight="300.0" />
 			</children>
 			<BorderPane.margin>
 				<Insets bottom="17.0" left="17.0" right="17.0" top="17.0" />
